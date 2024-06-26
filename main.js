@@ -5,7 +5,9 @@ leftWristY = 0;
 rightWristX = 0;
 rightWristY = 0;
 scoreLeftWrist =0;
+scoreRightWrist =0;
 song_status = "";
+song_status2 ="";
 function setup(){
     canvas = createCanvas(500,400);
     canvas.center();
@@ -20,15 +22,27 @@ function draw(){
     fill("#FF0000");
     stroke("#FF0000");
     song_status=music1.isPlaying();
+    song_status2=music2.isPlaying();
     if(scoreLeftWrist > 0.2){
         circle(lefWristX,leftWristY, 20);
         music2.stop();
+        if(song_status == false){
+            music1.play();
+            document.getElementById("song_name").innerHTML = "Harry Potter Theme Song";
+        }
         
     }
-    if(song_status == false){
-        music1.play();
-        document.getElementById("song_name").innerHTML = "Harry Potter Theme Song";
+    if(scoreRightWrist > 0.2){
+        circle(rightWristX,rightWristY, 20);
+        music2.stop();
+        if(song_status2 == false){
+            music2.play();
+            document.getElementById("song_name").innerHTML = "Harry Potter Theme Song";
+        }
+        
     }
+    
+    
 }
 
 function preload(){
@@ -43,10 +57,12 @@ function gotPoses(results){
         rightWristY = results[0].pose.rightWrist.y;
         console.log("rightWristX = " + rightWristX +" rightWristY = "+ rightWristY);
         scoreLeftWrist= results[0].pose.keypoints[9].score;
+        console.log(scoreLeftWrist);
     
         leftWristX = results[0].pose.leftWrist.x;
         leftWristY = results[0].pose.leftWrist.y;
         console.log("leftWristX = " + leftWristX +" leftWristY = "+ leftWristY);
+        console.log(scoreRightWrist);
 
 }}
 
